@@ -12,26 +12,35 @@ import { SponsorCard, type SponsorCardSite } from './components/SponsorCard';
 import { OAuthFlowDialog, type DialogHeading } from './components/OAuthFlowDialog';
 import { VertexImportDialog } from './components/VertexImportDialog';
 import { SiwcBindDialog } from './components/SiwcBindDialog';
+import { MistralApiKeyDialog } from './components/MistralApiKeyDialog';
 import {
   useOAuthFlows,
   usePluginOAuthProviders,
   type ProviderFlowState,
 } from './hooks/useOAuthFlows';
 import { useVertexImport } from './hooks/useVertexImport';
+import { useMistralApiKeyImport } from './hooks/useMistralApiKeyImport';
+import { useMistralCredentials } from './hooks/useMistralCredentials';
+import { MISTRAL_API_KEY_PROVIDER_ID } from './mistralApiKey';
 import {
   isSponsor,
   OAUTH_PROVIDERS,
   resolveThemedIcon,
   supportsManualCallback,
   type OAuthProviderCard,
+  type PluginOAuthProviderCard,
 } from './providers';
 import styles from './OAuthPage.module.scss';
 
-/** 对话框焦点标识：Vertex 不是 OAuth 提供商，用保留 id 避免与提供商冲突。 */
+/** 对话框焦点标识：Vertex 与 Mistral API key 不是 OAuth 提供商，用保留 id 避免与提供商冲突。 */
 const VERTEX_DIALOG_ID = '__vertex__';
 const VERTEX_LABEL = 'Vertex AI';
+const MISTRAL_API_KEY_DIALOG_ID = '__mistral_api_key__';
 
-type DialogTarget = { kind: 'oauth'; id: string } | { kind: 'vertex' };
+type DialogTarget =
+  | { kind: 'oauth'; id: string }
+  | { kind: 'vertex' }
+  | { kind: 'mistral-api-key' };
 
 /**
  * OAuth 登录：提供商画廊（一屏看全）+ 聚焦的授权对话框。
@@ -72,6 +81,18 @@ export function OAuthPage() {
     isFocused: () => focusedRef.current === VERTEX_DIALOG_ID,
     onCredentialAdded: flows.recordCredentialAdded,
   });
+
+  // Mistral 插件提供商：浏览器登录之外还支持粘贴 API key，并能丢弃已存凭证
+  const isMistralCard = (card?: OAuthProviderCard): card is PluginOAuthProviderCard =>
+    card?.kind === 'plugin' && card.id === MISTRAL_API_KEY_PROVIDER_ID;
+  const mistralCard = providerCards.find((card) => isMistralCard(card));
+  const mistralApiKey = useMistralApiKeyImport({
+    isFocused: () => focusedRef.current === MISTRAL_API_KEY_DIALOG_ID,
+    onCredentialAdded: flows.recordCredentialAdded,
+  });
+  const mistralCredentials = useMistralCredentials(
+    dialogOpen && dialog?.kind === 'oauth' && dialog.id === MISTRAL_API_KEY_PROVIDER_ID
+  );
 
   const labelOf = (card: OAuthProviderCard) =>
     card.kind === 'plugin'
@@ -118,6 +139,8 @@ export function OAuthPage() {
     focusedRef.current = card.id;
     setDialog({ kind: 'oauth', id: card.id });
     setDialogOpen(true);
+    // Mistral 卡先停在方式选择页（浏览器登录 / 粘贴 API key），不自动开始授权
+    if (isMistralCard(card)) return;
     // 已有进行中/失败/刚成功的尝试 → 只是重新打开查看；否则立即开始登录
     if (!flows.states[card.id]?.status) void flows.startAuth(card.id);
   };
@@ -128,9 +151,17 @@ export function OAuthPage() {
     setDialogOpen(true);
   };
 
+  const openMistralApiKey = () => {
+    focusedRef.current = MISTRAL_API_KEY_DIALOG_ID;
+    setDialog({ kind: 'mistral-api-key' });
+    setDialogOpen(true);
+  };
+
   const closeDialog = () => {
     if (dialog?.kind === 'oauth') flows.dismissSuccess(dialog.id);
     if (dialog?.kind === 'vertex' && vertexImport.vertex.result) vertexImport.resetForAnother();
+    if (dialog?.kind === 'mistral-api-key' && mistralApiKey.state.result)
+      mistralApiKey.resetForAnother();
     focusedRef.current = null;
     setDialogOpen(false);
   };
@@ -232,6 +263,25 @@ export function OAuthPage() {
           text={(suffix) => flows.providerText(dialogCard.id, suffix)}
           supportsCallback={supportsManualCallback(dialogCard)}
           sponsor={sponsorOf(dialogCard)}
+          apiKeyEntry={
+            isMistralCard(dialogCard)
+              ? { label: t('mistral_api_key.paste_button'), onOpen: openMistralApiKey }
+              : undefined
+          }
+          storedCredentials={
+            isMistralCard(dialogCard)
+              ? {
+                  title: t('mistral_api_key.stored_title'),
+                  loadingLabel: t('mistral_api_key.stored_loading'),
+                  emptyLabel: t('mistral_api_key.stored_empty'),
+                  deleteLabel: t('mistral_api_key.delete_button'),
+                  items: mistralCredentials.items,
+                  loading: mistralCredentials.loading,
+                  deleting: mistralCredentials.deleting,
+                  onRemove: mistralCredentials.remove,
+                }
+              : undefined
+          }
           onStart={() => void flows.startAuth(dialogCard.id)}
           onCancel={() => void flows.cancelAuth(dialogCard.id)}
           onCallbackChange={(value) => flows.setCallbackInput(dialogCard.id, value)}
@@ -256,6 +306,23 @@ export function OAuthPage() {
         onViewAuthFiles={viewAuthFiles}
         onClose={closeDialog}
       />
+
+      {mistralCard && (
+        <MistralApiKeyDialog
+          open={dialogOpen && dialog?.kind === 'mistral-api-key'}
+          heading={{
+            title: t('mistral_api_key.title'),
+            caption: mistralCard.title,
+            icon: mistralCard.icon,
+          }}
+          state={mistralApiKey.state}
+          onKeyChange={mistralApiKey.setKey}
+          onImport={() => void mistralApiKey.importCredential()}
+          onImportAnother={mistralApiKey.resetForAnother}
+          onViewAuthFiles={viewAuthFiles}
+          onClose={closeDialog}
+        />
+      )}
 
       {siwcKey > 0 && (
         <SiwcBindDialog
