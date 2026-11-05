@@ -693,6 +693,28 @@
     "drop_hint": "Choose or drop a JSON file",
     "import_another": "Import another"
   },
+  "mistral_api_key": {
+    "title": "Add Mistral API key",
+    "description": "Paste a Mistral account API key to store it as a credential alongside browser sign-in. It is saved on the server as auth-dir/mistral-<hash>.json and spends the account's normal API budget.",
+    "key_label": "Mistral API key",
+    "key_placeholder": "mk-…",
+    "key_hint": "The key is sent only to your CLI Proxy API server and stored in its auth directory.",
+    "key_required": "Paste a Mistral API key first",
+    "import_button": "Add API key",
+    "success": "Mistral API key added successfully",
+    "result_title": "Credential saved",
+    "result_file": "Persisted file",
+    "import_another": "Add another key",
+    "paste_button": "Paste an API key",
+    "stored_title": "Stored Mistral credentials",
+    "stored_loading": "Loading credentials…",
+    "stored_empty": "No Mistral credentials stored yet.",
+    "delete_button": "Discard",
+    "delete_title": "Discard credential",
+    "delete_confirm": "Discard \"{{name}}\"? The credential is removed from the server and cannot be recovered.",
+    "delete_success": "Credential discarded",
+    "delete_failed": "Failed to discard credential"
+  },
   "oauth_excluded": {
     "editor_description": "Choose which models a provider exposes using individual selections or wildcard rules.",
     "models_hint": "Expand the list to select models, or enter wildcard rules below.",
@@ -2083,7 +2105,7 @@
       "activeCount": "{{active}}/{{total}} active"
     },
     "providerNames": {
-       "aiCodeMirror": "AIcodemirror",
+      "aiCodeMirror": "AIcodemirror",
       "meta": "Muse (Meta)",
       "gemini": "Gemini",
       "interactions": "Interactions API",
@@ -2146,8 +2168,8 @@
       "urlMode": "{{provider}} URL",
       "urlHint": "All URLs use the same API conventions. Saving writes only the endpoint for the current grouped protocol.",
       "urlOptions": {
-         "aiCodeMirrorGlobal": "Global high-protection route",
-         "aiCodeMirrorDomestic": "Mainland China optimized route",
+        "aiCodeMirrorGlobal": "Global high-protection route",
+        "aiCodeMirrorDomestic": "Mainland China optimized route",
         "standard": "Standard URL",
         "direct": "Direct URL",
         "domestic": "China mainland route",
@@ -2156,8 +2178,8 @@
         "global": "Global"
       },
       "urlOptionDescriptions": {
-         "aiCodeMirrorGlobal": "A high-protection route for global access.",
-         "aiCodeMirrorDomestic": "A route optimized for mainland China networks.",
+        "aiCodeMirrorGlobal": "A high-protection route for global access.",
+        "aiCodeMirrorDomestic": "A route optimized for mainland China networks.",
         "domestic": "For users and workloads in mainland China; usually lower latency in mainland networks.",
         "overseas": "For overseas deployments, cross-border access, or workloads that need overseas models.",
         "mainlandChinaRecommended": "Recommended for users and workloads on mainland China networks.",

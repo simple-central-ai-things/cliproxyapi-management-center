@@ -597,6 +597,13 @@ export const authFilesApi = {
     return normalizeBatchUploadResponse(payload, requestedNames);
   },
 
+  /** Upload a raw credential JSON payload under an explicit file name (?name= path). */
+  uploadCredentialJSON: (name: string, credential: unknown) =>
+    apiClient.post<{ status: string }>(
+      `/credentials?name=${encodeURIComponent(name)}`,
+      credential
+    ),
+
   deleteFiles: async (names: string[]): Promise<AuthFileBatchDeleteResult> => {
     const requestedNames = normalizeRequestedAuthFileNames(names);
     if (requestedNames.length === 0) {

@@ -693,6 +693,28 @@
     "drop_hint": "JSON 파일을 선택하거나 끌어다 놓으세요",
     "import_another": "하나 더 가져오기"
   },
+  "mistral_api_key": {
+    "title": "Add Mistral API key",
+    "description": "Paste a Mistral account API key to store it as a credential alongside browser sign-in. It is saved on the server as auth-dir/mistral-<hash>.json and spends the account's normal API budget.",
+    "key_label": "Mistral API key",
+    "key_placeholder": "mk-…",
+    "key_hint": "The key is sent only to your CLI Proxy API server and stored in its auth directory.",
+    "key_required": "Paste a Mistral API key first",
+    "import_button": "Add API key",
+    "success": "Mistral API key added successfully",
+    "result_title": "Credential saved",
+    "result_file": "Persisted file",
+    "import_another": "Add another key",
+    "paste_button": "Paste an API key",
+    "stored_title": "Stored Mistral credentials",
+    "stored_loading": "Loading credentials…",
+    "stored_empty": "No Mistral credentials stored yet.",
+    "delete_button": "Discard",
+    "delete_title": "Discard credential",
+    "delete_confirm": "Discard \"{{name}}\"? The credential is removed from the server and cannot be recovered.",
+    "delete_success": "Credential discarded",
+    "delete_failed": "Failed to discard credential"
+  },
   "oauth_excluded": {
     "editor_description": "개별 선택 또는 와일드카드 규칙을 사용하여 공급자가 노출할 모델을 선택합니다.",
     "models_hint": "목록을 펼쳐 모델을 선택하거나 아래에 와일드카드 규칙을 입력하세요.",
@@ -2083,7 +2105,7 @@
       "activeCount": "활성 {{active}}/{{total}}"
     },
     "providerNames": {
-       "aiCodeMirror": "AIcodemirror",
+      "aiCodeMirror": "AIcodemirror",
       "meta": "Muse (Meta)",
       "gemini": "Gemini",
       "interactions": "Interactions API",
@@ -2146,8 +2168,8 @@
       "urlMode": "{{provider}} URL",
       "urlHint": "모든 URL은 동일한 API 규칙을 사용합니다. 저장 시 현재 그룹화된 프로토콜의 엔드포인트만 기록됩니다.",
       "urlOptions": {
-         "aiCodeMirrorGlobal": "글로벌 고보호 경로",
-         "aiCodeMirrorDomestic": "중국 본토 최적화 경로",
+        "aiCodeMirrorGlobal": "글로벌 고보호 경로",
+        "aiCodeMirrorDomestic": "중국 본토 최적화 경로",
         "standard": "표준 URL",
         "direct": "직접 연결 URL",
         "domestic": "중국 본토 경로",
@@ -2156,8 +2178,8 @@
         "global": "글로벌"
       },
       "urlOptionDescriptions": {
-         "aiCodeMirrorGlobal": "전 세계 접속을 위한 보호 수준이 높은 경로입니다.",
-         "aiCodeMirrorDomestic": "중국 본토 네트워크에 최적화된 경로입니다.",
+        "aiCodeMirrorGlobal": "전 세계 접속을 위한 보호 수준이 높은 경로입니다.",
+        "aiCodeMirrorDomestic": "중국 본토 네트워크에 최적화된 경로입니다.",
         "domestic": "중국 본토의 사용자 및 워크로드용입니다. 본토 네트워크에서 일반적으로 대기 시간이 더 짧습니다.",
         "overseas": "해외 배포, 국경 간 액세스 또는 해외 모델이 필요한 워크로드용입니다.",
         "mainlandChinaRecommended": "중국 본토 네트워크의 사용자 및 워크로드에 권장됩니다.",

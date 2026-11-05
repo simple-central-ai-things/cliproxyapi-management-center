@@ -554,7 +554,6 @@
     "reset_confirm_button": "確認重置",
     "reset_not_confirmed": "尚未確認額度重置成功，請重新整理額度後再決定是否重試。",
     "reset_cooldown_failed": "額度已重置，但代理冷卻清除失敗。請在原連線的認證檔案頁面使用「清除冷卻」，不要再次消耗重置卡。",
-
     "reset_success": "已重置「{{name}}」的 Codex 配額",
     "reset_failed": "重置「{{name}}」的 Codex 配額失敗：{{message}}",
     "plan_plus": "Plus",
@@ -691,6 +690,28 @@
     "result_file": "儲存檔案",
     "drop_hint": "選擇或拖入 JSON 檔案",
     "import_another": "再匯入一個"
+  },
+  "mistral_api_key": {
+    "title": "Add Mistral API key",
+    "description": "Paste a Mistral account API key to store it as a credential alongside browser sign-in. It is saved on the server as auth-dir/mistral-<hash>.json and spends the account's normal API budget.",
+    "key_label": "Mistral API key",
+    "key_placeholder": "mk-…",
+    "key_hint": "The key is sent only to your CLI Proxy API server and stored in its auth directory.",
+    "key_required": "Paste a Mistral API key first",
+    "import_button": "Add API key",
+    "success": "Mistral API key added successfully",
+    "result_title": "Credential saved",
+    "result_file": "Persisted file",
+    "import_another": "Add another key",
+    "paste_button": "Paste an API key",
+    "stored_title": "Stored Mistral credentials",
+    "stored_loading": "Loading credentials…",
+    "stored_empty": "No Mistral credentials stored yet.",
+    "delete_button": "Discard",
+    "delete_title": "Discard credential",
+    "delete_confirm": "Discard \"{{name}}\"? The credential is removed from the server and cannot be recovered.",
+    "delete_success": "Credential discarded",
+    "delete_failed": "Failed to discard credential"
   },
   "oauth_excluded": {
     "editor_description": "為供應商設定不對外顯示的模型，支援精確選取和萬用字元規則。",
@@ -2110,7 +2131,7 @@
       "activeCount": "{{active}}/{{total}} 活躍"
     },
     "providerNames": {
-       "aiCodeMirror": "AIcodemirror",
+      "aiCodeMirror": "AIcodemirror",
       "meta": "Muse (Meta)",
       "gemini": "Gemini",
       "interactions": "Interactions API",
@@ -2173,8 +2194,8 @@
       "urlMode": "{{provider}} URL",
       "urlHint": "不同 URL 的使用規範一致,儲存時只會寫入目前分組協議對應位址。",
       "urlOptions": {
-         "aiCodeMirrorGlobal": "全球高保線路",
-         "aiCodeMirrorDomestic": "國內優化線路",
+        "aiCodeMirrorGlobal": "全球高保線路",
+        "aiCodeMirrorDomestic": "國內優化線路",
         "standard": "普通 URL",
         "direct": "專線直連 URL",
         "domestic": "中國大陸線路",
@@ -2183,8 +2204,8 @@
         "global": "全球"
       },
       "urlOptionDescriptions": {
-         "aiCodeMirrorGlobal": "適用於全球存取的高防護線路。",
-         "aiCodeMirrorDomestic": "針對中國大陸網路最佳化的線路。",
+        "aiCodeMirrorGlobal": "適用於全球存取的高防護線路。",
+        "aiCodeMirrorDomestic": "針對中國大陸網路最佳化的線路。",
         "domestic": "面向中國大陸使用者和部署在中國大陸網路環境中的業務，通常可獲得更低延遲。",
         "overseas": "面向海外部署、跨境存取或需要存取境外模型的業務。",
         "mainlandChinaRecommended": "推薦中國大陸使用者和部署在中國大陸網路環境中的業務使用。",
