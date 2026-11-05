@@ -741,6 +741,104 @@
   }
 }
 
+/* ---------- 插件提供商备选区：粘贴 API key 入口 + 已存凭证丢弃 ---------- */
+
+.alternates {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+}
+
+.storedSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.storedTitle {
+  margin: 0;
+  font-family: $font-mono;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.storedLoading {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.storedEmpty {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+
+.storedList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.storedItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 7px 9px 7px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--bg-secondary);
+}
+
+.storedName {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: $font-mono;
+  font-size: 12px;
+  color: var(--text-primary);
+}
+
+.storedDelete {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--viz-failure) 35%, transparent);
+  background: transparent;
+  font-size: 12px;
+  font-weight: 550;
+  color: var(--viz-failure);
+  cursor: pointer;
+  transition: background-color var(--dur-press, 140ms) var(--ease-out-strong, ease-out);
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .storedDelete:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--viz-failure) 10%, transparent);
+  }
+}
+
 @keyframes oauth-fade-in {
   from {
     opacity: 0;

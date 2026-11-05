@@ -1,7 +1,7 @@
 import { useId, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Modal } from '@/components/ui/Modal';
-import { IconExternalLink, IconLoader2 } from '@/components/ui/icons';
+import { IconExternalLink, IconLoader2, IconTrash2 } from '@/components/ui/icons';
 import type { ProviderFlowState } from '../hooks/useOAuthFlows';
 import { resolveFlowView, splitAuthUrl, type FlowView } from '../flowView';
 import { BrandGlyph } from './BrandGlyph';
@@ -38,6 +38,19 @@ export interface OAuthFlowDialogProps {
   supportsCallback: boolean;
   /** 赞助商：品牌蓝主按钮 + 提示行里的注册链接。 */
   sponsor?: { url: string; label: string };
+  /** 插件提供商的备选凭证入口（如「粘贴 API key」），仅在选择视图（未开始/失败）展示。 */
+  apiKeyEntry?: { label: string; onOpen: () => void };
+  /** 插件提供商已存的凭证与丢弃（sign out）动作，仅在选择视图展示。 */
+  storedCredentials?: {
+    title: string;
+    loadingLabel: string;
+    emptyLabel: string;
+    deleteLabel: string;
+    items: Array<{ name: string }>;
+    loading: boolean;
+    deleting: string | null;
+    onRemove: (name: string) => void;
+  };
   onStart: () => void;
   onCancel: () => void;
   onCallbackChange: (value: string) => void;
@@ -90,6 +103,60 @@ function ProviderHint({ text, sponsor }: Pick<OAuthFlowDialogProps, 'text' | 'sp
   );
 }
 
+/** 插件提供商备选区：粘贴 API key 入口 + 已存凭证的丢弃动作。 */
+export function PluginAlternates({
+  apiKeyEntry,
+  storedCredentials,
+}: Pick<OAuthFlowDialogProps, 'apiKeyEntry' | 'storedCredentials'>) {
+  if (!apiKeyEntry && !storedCredentials) return null;
+  return (
+    <div className={styles.alternates}>
+      {apiKeyEntry && (
+        <button type="button" className={styles.secondary} onClick={apiKeyEntry.onOpen}>
+          {apiKeyEntry.label}
+        </button>
+      )}
+      {storedCredentials && (
+        <div className={styles.storedSection}>
+          <h3 className={styles.storedTitle}>{storedCredentials.title}</h3>
+          {storedCredentials.loading ? (
+            <p className={styles.storedLoading} role="status">
+              <IconLoader2 size={13} className={styles.spinning} aria-hidden="true" />
+              {storedCredentials.loadingLabel}
+            </p>
+          ) : storedCredentials.items.length === 0 ? (
+            <p className={styles.storedEmpty}>{storedCredentials.emptyLabel}</p>
+          ) : (
+            <ul className={styles.storedList}>
+              {storedCredentials.items.map((item) => (
+                <li key={item.name} className={styles.storedItem}>
+                  <code className={styles.storedName} title={item.name}>
+                    {item.name}
+                  </code>
+                  <button
+                    type="button"
+                    className={styles.storedDelete}
+                    title={`${storedCredentials.deleteLabel}: ${item.name}`}
+                    onClick={() => storedCredentials.onRemove(item.name)}
+                    disabled={storedCredentials.deleting === item.name}
+                  >
+                    {storedCredentials.deleting === item.name ? (
+                      <IconLoader2 size={13} className={styles.spinning} aria-hidden="true" />
+                    ) : (
+                      <IconTrash2 size={13} aria-hidden="true" />
+                    )}
+                    {storedCredentials.deleteLabel}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function FlowBody(props: OAuthFlowDialogProps & { view: Exclude<FlowView, 'success'> }) {
   const { t } = useTranslation();
   const { view, providerId, state, text, onStart } = props;
@@ -109,6 +176,10 @@ function FlowBody(props: OAuthFlowDialogProps & { view: Exclude<FlowView, 'succe
             {view === 'failed' ? t('auth_login.restart_login') : text('oauth_button')}
           </button>
         </div>
+        <PluginAlternates
+          apiKeyEntry={props.apiKeyEntry}
+          storedCredentials={props.storedCredentials}
+        />
       </div>
     );
   }
@@ -346,14 +417,20 @@ function FlowStatusBar({ providerId, state, text, onStart, onCancel }: OAuthFlow
   );
 }
 
+export function SuccessMark() {
+  return (
+    <svg className={styles.successMark} viewBox="0 0 52 52" aria-hidden="true">
+      <circle className={styles.successRing} cx="26" cy="26" r="24" />
+      <path className={styles.successCheck} d="M16 27l7 7 14-15" />
+    </svg>
+  );
+}
+
 function SuccessView({ text, onStart, onViewAuthFiles }: OAuthFlowDialogProps) {
   const { t } = useTranslation();
   return (
     <div className={styles.result} role="status">
-      <svg className={styles.successMark} viewBox="0 0 52 52" aria-hidden="true">
-        <circle className={styles.successRing} cx="26" cy="26" r="24" />
-        <path className={styles.successCheck} d="M16 27l7 7 14-15" />
-      </svg>
+      <SuccessMark />
       <div className={styles.resultTitle}>{text('oauth_status_success')}</div>
       <p className={styles.resultHint}>{t('auth_login.success_saved_hint')}</p>
       <div className={styles.resultActions}>
