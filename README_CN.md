@@ -9,13 +9,13 @@
 为 CLI Proxy API 打造的轻量 Web 管理界面。<br>
 提供商、凭据、配额与日志，一个 HTML 文件即可管理。
 
-[![后端：v8](https://img.shields.io/badge/Backend-v8-5865F2?style=flat-square)](https://github.com/router-for-me/CLIProxyAPI)
+[![后端：v8](https://img.shields.io/badge/Backend-v8-5865F2?style=flat-square)](https://github.com/simple-central-ai-things/cliproxyapi)
 [![单文件构建](https://img.shields.io/badge/Build-single_HTML-0F766E?style=flat-square)](#部署)
 [![许可证：MIT](https://img.shields.io/badge/License-MIT-64748B?style=flat-square)](LICENSE)
 
 [English](README.md) · **简体中文**
 
-[快速开始](#快速开始) · [功能一览](#功能一览) · [本地开发](#本地开发) · [下载发布版本](https://github.com/router-for-me/Cli-Proxy-API-Management-Center/releases)
+[快速开始](#快速开始) · [功能一览](#功能一览) · [本地开发](#本地开发) · [下载发布版本](https://github.com/simple-central-ai-things/cliproxyapi-management-center/releases)
 
 </div>
 
@@ -36,7 +36,7 @@
 
 ## 快速开始
 
-[CLI Proxy API](https://github.com/router-for-me/CLIProxyAPI) 已内置 Web UI，常规使用无需单独部署前端。
+[CLI Proxy API](https://github.com/simple-central-ai-things/cliproxyapi) 已内置 Web UI，常规使用无需单独部署前端。
 
 1. 启动 CLI Proxy API 服务。
 2. 打开 `http://<host>:<api_port>/management.html`。
@@ -52,7 +52,7 @@
 
 支持 `localhost:8317`、`https://example.com:8317` 或 `http://example.com:8317/v8/management` 等地址格式；管理接口后缀会被自动移除。
 
-管理请求使用 `Authorization: Bearer <MANAGEMENT_KEY>`。远程访问可能需要在服务端开启 `management.allow-remote: true`。完整鉴权规则与服务端限制请参考[后端文档](https://github.com/router-for-me/CLIProxyAPI)。
+管理请求使用 `Authorization: Bearer <MANAGEMENT_KEY>`。远程访问可能需要在服务端开启 `management.allow-remote: true`。完整鉴权规则与服务端限制请参考[后端文档](https://github.com/simple-central-ai-things/cliproxyapi)。
 
 </details>
 
@@ -157,6 +157,6 @@ bun run dev
 
 <div align="center">
 
-[CLI Proxy API](https://github.com/router-for-me/CLIProxyAPI) · [反馈问题](https://github.com/router-for-me/Cli-Proxy-API-Management-Center/issues) · [MIT 许可证](LICENSE)
+[CLI Proxy API](https://github.com/simple-central-ai-things/cliproxyapi) · [反馈问题](https://github.com/simple-central-ai-things/cliproxyapi-management-center/issues) · [MIT 许可证](LICENSE)
 
 </div>

@@ -168,7 +168,7 @@ export function SectionConnectivity({
               fieldId="rmPanelRepo"
               size="lg"
               label={t('config_management.visual.sections.remote.panel_repo')}
-              placeholder="https://github.com/router-for-me/Cli-Proxy-API-Management-Center"
+              placeholder="https://github.com/simple-central-ai-things/cliproxyapi-management-center"
               value={values.rmPanelRepo}
               onChange={(rmPanelRepo) => onChange({ rmPanelRepo })}
               disabled={disabled}
