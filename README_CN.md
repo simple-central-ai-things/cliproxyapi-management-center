@@ -2,7 +2,7 @@
 
 <img src="./logo.jpg" alt="CLI Proxy API" width="144">
 
-# CLI Proxy API 管理中心
+# cliproxyapi-management-center
 
 **运行状态，一目了然。服务配置，尽在掌握。**
 

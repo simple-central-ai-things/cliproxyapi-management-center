@@ -1911,7 +1911,7 @@
   },
   "system_info": {
     "title": "Информация о центре управления",
-    "about_title": "CLI Proxy API Management Center",
+    "about_title": "cliproxyapi-management-center",
     "models_title": "Доступные модели",
     "models_desc": "Показывает ответ /models и автоматически использует сохранённые API-ключи для авторизации.",
     "models_loading": "Загрузка доступных моделей...",

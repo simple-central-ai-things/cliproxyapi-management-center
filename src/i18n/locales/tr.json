@@ -1917,7 +1917,7 @@
   },
   "system_info": {
     "title": "Yönetim Merkezi Bilgisi",
-    "about_title": "CLIProxyAPI Yönetim Merkezi",
+    "about_title": "cliproxyapi-management-center",
     "models_title": "Kullanılabilir Modeller",
     "models_desc": "/models Yanıtını Gösterir ve Kimlik Doğrulama için Kayıtlı API Anahtarlarını Otomatik Kullanır.",
     "models_loading": "Kullanılabilir Modeller Yükleniyor...",

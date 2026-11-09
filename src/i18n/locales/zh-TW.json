@@ -1943,7 +1943,7 @@
   },
   "system_info": {
     "title": "管理中心資訊",
-    "about_title": "CLI Proxy API Management Center",
+    "about_title": "cliproxyapi-management-center",
     "models_title": "可用模型清單",
     "models_desc": "展示 /models 回傳的模型，並自動使用伺服器儲存的 API Key 進行驗證。",
     "models_loading": "正在載入可用模型...",
