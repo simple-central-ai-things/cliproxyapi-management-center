@@ -156,6 +156,24 @@ export function useDashboardOverview() {
     void loadModels();
   }, [connected, fetchConfig, loadAuthFiles, loadModels]);
 
+  // A mounted dashboard is not the page where credentials mutate; when the tab
+  // regains focus (e.g. after a delete happened in another tab), re-fetch the
+  // auth-file list so deleted credentials do not linger on screen.
+  useEffect(() => {
+    if (!connected) return;
+    const onTabVisible = () => {
+      if (document.visibilityState === 'visible') {
+        void loadAuthFiles();
+      }
+    };
+    document.addEventListener('visibilitychange', onTabVisible);
+    window.addEventListener('focus', onTabVisible);
+    return () => {
+      document.removeEventListener('visibilitychange', onTabVisible);
+      window.removeEventListener('focus', onTabVisible);
+    };
+  }, [connected, loadAuthFiles]);
+
   const refresh = useCallback(async () => {
     if (!connected) return;
     await Promise.allSettled([

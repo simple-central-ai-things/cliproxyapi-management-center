@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNotificationStore } from '@/stores';
+import { useNotificationStore, useQuotaStore } from '@/stores';
 import { authFilesApi } from '@/services/api';
 import { getErrorMessage } from '@/utils/helpers';
 import { AUTH_FILES_CHANGED_EVENT, notifyAuthFilesChanged } from '@/features/authFiles/authFilesEvents';
@@ -70,6 +70,7 @@ export function useMistralCredentials(enabled: boolean) {
             await authFilesApi.deleteFile(name);
             showNotification(t('mistral_api_key.delete_success'), 'success');
             setItems((prev) => prev.filter((item) => item.name !== name));
+            useQuotaStore.getState().clearQuotaCache([name]);
             notifyAuthFilesChanged();
           } catch (err: unknown) {
             const message = getErrorMessage(err);
